@@ -1,0 +1,139 @@
+{% extends 'navbar.html' %}
+<!-- the path for extends start from template directory -->
+{% load static%}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Found</title>
+</head>
+
+<body>
+    
+    <div class="container mt-5">
+        <form id="registrationForm"  method="POST" class="row g-3" enctype="multipart/form-data">
+            {% csrf_token %}
+            <!-- CSRF (Cross-Site Request Forgery) 
+            CSRF attack, an attacker tricks a user's browser into making a request to a web application without
+                the user's knowledge or consent.
+            
+                Verification: When the user submits the form, the application checks whether the CSRF token submitted
+            with the request matches the one that was included in the form. If the tokens match, the request is 
+            considered legitimate, and the action is performed. If they don't match, the request is rejected as potentially malicious.
+            -->
+            <div class="col-md-6">
+                <label for="first_name" class="form-label">First name</label>
+                <input type="text" class="form-control" id="first_name" name="first_name" placeholder="John" required>
+            </div>
+            <div class="col-md-6">
+                <label for="last_name" class="form-label">Last name</label>
+                <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Doe" required>
+            </div>
+            <div class="col-md-6">
+                <label for="phone-input" class="form-label">Phone number</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                    </div>
+                    <input type="text" class="form-control" id="phone_number" name="phone_number" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="123-456-7890" required>
+                </div>
+                <small id="helper-text-explanation" class="form-text text-muted">Enter phone number in format: 123-456-7890</small>
+            </div>
+            <div class="col-md-6">
+                <label for="age" class="form-label">Age</label>
+                <input type="text" class="form-control" id="age" name="age" placeholder="20" required>
+            </div>
+            <div class="col-12">
+                <label for="address" class="form-label">Address</label>
+                <input type="text" class="form-control" id="address" placeholder="Egypt, Cairo" required>
+            </div>
+            <div class="col-md-6">
+                <label for="finder_name" class="form-label">Finder Name</label>
+                <input type="text" class="form-control" id="finder_name" name="finder_name" placeholder="John" required>
+            </div>
+            <div class="col-md-6">
+                <label for="countries" class="form-label">Select city</label>
+                <select id="countries" class="form-control" name="city" id="city">
+                    <option selected>Choose a city</option>
+                    <option value="Cairo">Cairo</option>
+                    <option value="Giza">Giza</option>
+                    <option value="Alex">Alex</option>
+                    <option value="Big Cairo">Big Cairo</option>
+                    <option value="south Egypr">south Egypr</option>
+                    <option value="Aswan">Aswan</option>
+                    <option value="Foreign">Foreign</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="col-12">
+                <label for="message" class="form-label">Your message</label>
+                <textarea class="form-control" id="message" name="message" rows="4" placeholder="Write your description here..."></textarea>
+            </div>
+            <div class="col-12">
+                <label for="image" class="form-label">Upload Image</label>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="image" name="image" accept="image/*">
+                    <label class="custom-file-label" for="image">Choose file</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label for="found_date" class="form-label">Found Date</label>
+                <input type="date" class="form-control" id="date" name="date" required>
+            </div>
+            <div class="col-12">
+                <button type="submit" id="submitButton" class="btn btn-primary">Submit</button>
+            </div>
+            <!-- <div class="col-12">
+                <button type="button" id="submitButton" class="btn btn-primary">Submit</button>
+            </div> -->
+        </form>
+    </div>
+    <script>
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     const form = document.getElementById('registrationForm');
+        //     // Optional: Disable submit button after click
+        //     const submitButton = document.getElementById('submitButton');
+        //     submitButton.addEventListener('click', function() {
+        //         submitButton.disabled = true; // Disable button to prevent multiple clicks
+        //     });
+        // });
+            // document.addEventListener('DOMContentLoaded', function() {
+            //     document.getElementById('lost-form').addEventListener('submit', function(event) {
+            //         var phoneInput = document.getElementById('phone_number');
+            //         var phoneError = document.getElementById('phone-error');
+            //         var imageInput = document.getElementById('image');
+            //         var imageError = document.getElementById('image-error');
+        
+            //         // Reset any previous error messages
+            //         phoneError.textContent = '';
+            //         imageError.textContent = '';
+        
+            //         // Validate phone number format
+            //         var phonePattern = /^[0-9]{3}-[0-9]{3}-[0-9]{4}$/;
+            //         if (!phonePattern.test(phoneInput.value)) {
+            //             phoneError.textContent = 'Please enter a valid phone number (e.g., 123-456-7890).';
+            //             event.preventDefault(); // Prevent form submission
+            //         }
+        
+            //         // Validate image upload
+            //         if (imageInput.files.length === 0) {
+            //             imageError.textContent = 'Please choose an image file.';
+            //             event.preventDefault(); // Prevent form submission
+            //         } else {
+            //             var allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+            //             var fileType = imageInput.files[0].type;
+            //             if (!allowedTypes.includes(fileType)) {
+            //                 imageError.textContent = 'Please upload a valid image file (JPEG, PNG, GIF).';
+            //                 event.preventDefault(); // Prevent form submission
+            //             }
+            //         }
+            //     });
+            // });
+    </script>    
+
+
+</body>
+</html>
+{% endblock content %}
