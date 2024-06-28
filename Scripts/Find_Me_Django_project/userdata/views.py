@@ -2,6 +2,7 @@
 
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.contrib.auth import logout as logout_user, login as login_user, authenticate
 from .models import User
 
 def register(request):
@@ -23,9 +24,11 @@ def register(request):
             return redirect('register')
 
         # Create new user
-        new_user = User(username=username, password=password, phone_number=phone_number,
+        new_user = User(username=username, phone_number=phone_number,
                         national_id=national_id, email=email, address=address)
+        new_user.set_password(password)
         new_user.save()
+
         messages.success(request, 'Registration successful. Please login.')
         return redirect('login')
 
@@ -38,7 +41,13 @@ def login(request):
 
         # Check if username and password match
         try:
-            user = User.objects.get(username=username, password=password)
+            user = authenticate(request, username=username, password=password)
+            print(username, password, user)
+
+            if not user:
+                return redirect('home')
+
+            login_user(request, user)
             messages.success(request, 'Login successful.')
             return redirect('home')  # Redirect to home page after successful login
         except User.DoesNotExist:
@@ -46,5 +55,10 @@ def login(request):
             return redirect('login')
 
     return render(request, 'login.html')
+
+def logout(request):
+    logout_user(request)
+
+    return redirect(to="/")
 
 # node that with render we write the .html extensoin while redirect not bec it like urls it use urls

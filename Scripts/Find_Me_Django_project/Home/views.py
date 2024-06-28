@@ -35,7 +35,7 @@ def home(request):
     # now when there is a post reqest from this rendered page the the data in post request from this templete
     # will save automaticcally in database 
     # to see it from admin pannel just register the class User in admin page.
-    return render(request, 'home/home.html', {'Lostperson':Lostperson.objects.all(), 'Founded': Foundperson.objects.all()})
+    return render(request, 'home/home.html', {'Lostperson':Lostperson.objects.all(), 'Foundperson': Foundperson.objects.all()})
     # def lost(request):
     #     return render(request, 'lost/lost.html')
     # def found(request):

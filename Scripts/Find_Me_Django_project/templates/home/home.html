@@ -1,129 +1,151 @@
-
-{% extends 'navbar.html' %}
-<!-- the path for extends start from template directory -->
-{% load static %}
-
-{% block content %}
+{% extends 'navbar.html' %} {% load static %} {% block content %}
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Home</title>
-        <link rel="stylesheet" href="{% static 'css/home.css' %}">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-        <!-- Font Awesome CSS -->
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
-    
-        <style>
-            /* Custom CSS for form layout */
-            .custom-control-label::before, .custom-file-label::after {
-                width: auto; /* Adjust width for custom checkboxes and file input */
-            }
-            body {
-                font-family: Arial, sans-serif;
-                padding: 20px;
-            }
-            .login-link, .register-link {
-                display: inline-block;
-                margin: 10px;
-                padding: 10px 20px;
-                background-color: #007bff;
-                color: #fff;
-                text-decoration: none;
-                border-radius: 5px;
-                transition: background-color 0.3s ease;
-            }
-            .login-link:hover, .register-link:hover {
-                background-color: #0056b3;
-            }
-        </style>
-    </head>
-    <body>
-        <!-- <h2> Login Form </h2>
-        <form id="loginForm" onsubmit="return validateForm()">
-            <div>
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
-                <span class="error-message" id="usernameError"></span>
-            </div>
-        
-            <div>
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
-                <span class="error-message" id="passwordError"></span>
-            </div>
-        
-            <button type="submit">Login</button>
-        </form>
-        <p>Don't have an account? <a href="{% url 'register' %}">Register here</a>.</p>
-        <script>
-            function validateForm() {
-                let isValid = true;
-        
-                const username = document.getElementById('username').value;
-                const password = document.getElementById('password').value;
-        
-                // Validate username (presence)
-                if (username.trim() === '') {
-                    document.getElementById('usernameError').textContent = "Username is required";
-                    isValid = false;
-                } else {
-                    document.getElementById('usernameError').textContent = "";
-                }
-        
-                // Validate password (presence)
-                if (password.trim() === '') {
-                    document.getElementById('passwordError').textContent = "Password is required";
-                    isValid = false;
-                } else {
-                    document.getElementById('passwordError').textContent = "";
-                }
-        
-                return isValid;
-            }
-        </script>      -->
-        <p><a href="{% url 'login' %}">Login</a>.</p>
-        <p><a href="{% url 'register' %}">Register here </a>Don't have an account?</p>   
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <!-- Font Awesome CSS -->
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+    />
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+    />
 
-        <h1> Losts </h1>
-        {% if Lostperson|length > 0 %}
-            {% for one in Lostperson %}
-            <h1> Name: {{one.name}} </h3>
-            <h3> Age: {{one.age}} </h3>
-            <h3> Time: {{one.time}} </h3>
-            <h3> Date: {{one.date}} </h3>
-            <h3> Add: {{one.address}} </h3>
-            <h3> City: {{one.city}} </h3>
-            <!-- <h3> {{one.current_date_time}} </h3> -->
-                {% if one.photo %}
-                    <img src="{{ one.photo.url }}" alt="">
-                {% else %}
-                    <p>No photo available</p>
-                {% endif %}
-            {% endfor %}
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        background-color: #f8f9fa;
+      }
+      .login-link,
+      .register-link {
+        display: inline-block;
+        margin: 10px;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+      }
+      .login-link:hover,
+      .register-link:hover {
+        background-color: #0056b3;
+      }
+      .card {
+        margin-bottom: 20px;
+      }
+      .card-img-top {
+        max-height: 200px;
+        object-fit: cover;
+      }
+      .card-title {
+        margin-bottom: 0;
+      }
+      .card-subtitle {
+        margin-top: 5px;
+        color: #6c757d;
+      }
+      .section-title {
+        margin-top: 30px;
+        margin-bottom: 20px;
+        text-align: center;
+        color: #343a40;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="text-center mb-4">
+        {% if not user.is_authenticated %}
+        <a href="{% url 'login' %}" class="login-link">Login</a>
+        <a href="{% url 'register' %}" class="register-link">Register here</a>
+        {% else %}
+        <a href="{% url 'logout' %}" class="login-link">Logout</a>
         {% endif %}
-        <h1> Founded </h1>
-        {% if Foundperson|length > 0 %}
-            {% for one in Foundperson %}
-            <h1> Name: {{one.name}} </h3>
-            <h3> Age: {{one.age}} </h3>
-            <h3> Time: {{one.time}} </h3>
-            <h3> Date: {{one.date}} </h3>
-            <h3> Add: {{one.address}} </h3>
-            <h3> City: {{one.city}} </h3>
-            <!-- <h3> {{one.current_date_time}} </h3> -->
-                {% if one.photo %}
-                <img src="{{ one.photo.url }}" alt="">
-                {% else %}
-                    <p>No photo available</p>
-                {% endif %}
-            {% endfor %}
+      </div>
+
+      <h1 class="section-title text-white">Lost Persons</h1>
+      <div class="row">
+        {% if Lostperson|length > 0 %} {% for one in Lostperson %}
+        <div class="col-md-4">
+          <div class="card">
+            {% if one.photo %}
+            <img
+              src="{{ one.photo.url }}"
+              class="card-img-top"
+              alt="Photo of {{ one.name }}"
+            />
+            {% else %}
+            <img
+              src="{% static 'img/default-photo.jpg' %}"
+              class="card-img-top"
+              alt="No photo available"
+            />
+            {% endif %}
+            <div class="card-body">
+              <h5 class="card-title">{{ one.name }}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Age: {{ one.age }}</h6>
+              <p class="card-text">
+                <strong>Last Seen:</strong> {{ one.date }}<br />
+                <strong>Location:</strong> {{ one.address }}, {{ one.city }}<br />
+                <strong>Finder:</strong> {{ one.finder_name }}<br />
+                <strong>Contact:</strong> {{ one.phone_number }}
+              </p>
+            </div>
+          </div>
+        </div>
+        {% endfor %} {% else %}
+        <p class="text-center text-white">No lost persons found.</p>
         {% endif %}
-        <!-- <h1> {{Lostperson.name}}</h1> -->
-    </body>
+      </div>
+
+      <h1 class="section-title text-white">Found Persons</h1>
+      <div class="row">
+        {% if Foundperson|length > 0 %} {% for one in Foundperson %}
+        <div class="col-md-4">
+          <div class="card">
+            {% if one.photo %}
+            <img
+              src="{{ one.photo.url }}"
+              class="card-img-top"
+              alt="Photo of {{ one.name }}"
+            />
+            {% else %}
+            <img
+              src="{% static 'img/default-photo.jpg' %}"
+              class="card-img-top"
+              alt="No photo available"
+            />
+            {% endif %}
+            <div class="card-body">
+              <h5 class="card-title">{{ one.name }}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Age: {{ one.age }}</h6>
+              <p class="card-text">
+                <strong>Found On:</strong> {{ one.date }}<br />
+                <strong>Location:</strong> {{ one.address }}, {{ one.city }}<br />
+                <strong>Finder:</strong> {{ one.finder_name }}<br />
+                <strong>Contact:</strong> {{ one.phone_number }}
+              </p>
+            </div>
+          </div>
+        </div>
+        {% endfor %} {% else %}
+        <p class="text-center text-white">No found persons available.</p>
+        {% endif %}
+      </div>
+    </div>
+  </body>
 </html>
 
 {% endblock content %}
